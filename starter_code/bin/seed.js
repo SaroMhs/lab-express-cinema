@@ -1,11 +1,18 @@
+const mongoose = require('mongoose');
+const Movie = require('../models/movies');
+const dbtitle = 'lab-cinema-generator';
+mongoose.connect(`mongodb://localhost/${dbtitle}`);
+
+Movie.collection.drop();
+
 const movies = [
   {
-    title : "A Wrinkle in Time",
-    director: "Ava DuVernay",
-    stars: ["Storm Reid", "Oprah Winfrey", "Reese Witherspoon"],
-    image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjMxNjQ5MTI3MV5BMl5BanBnXkFtZTgwMjQ2MTAyNDM@._V1_UX182_CR0,0,182,268_AL_.jpg",
-    description: "Following the discovery of a new form of space travel as well as Meg's father's disappearance, she, her brother, and her friend must join three magical beings - Mrs. Whatsit, Mrs. Who, and Mrs. Which - to travel across the universe to rescue him from a terrible evil.",
-    showtimes: ["13:00", "15:30", "18:00", "20:10", "22:40"]
+  title : "A Wrinkle in Time",
+  director: "Ava DuVernay",
+  stars: ["Storm Reid", "Oprah Winfrey", "Reese Witherspoon"],
+  image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMjMxNjQ5MTI3MV5BMl5BanBnXkFtZTgwMjQ2MTAyNDM@._V1_UX182_CR0,0,182,268_AL_.jpg",
+  description: "Following the discovery of a new form of space travel as well as Meg's father's disappearance, she, her brother, and her friend must join three magical beings - Mrs. Whatsit, Mrs. Who, and Mrs. Which - to travel across the universe to rescue him from a terrible evil.",
+  showtimes: ["13:00", "15:30", "18:00", "20:10", "22:40"]
   },
   {
     title : "The Strangers: Prey at Night",
@@ -44,7 +51,7 @@ const movies = [
     director: "Paolo Virzì",
     stars: ["Helen Mirren", "Donald Sutherland", "Janel Moloney"],
     image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTg1NTg2MzcyNF5BMl5BanBnXkFtZTgwNjMwMDIzNDM@._V1_UX182_CR0,0,182,268_AL_.jpg",
-    description: "A runaway couple goes on an unforgettable journey in the faithful old RV they call The Leisure Seeker, traveling from Boston to The Ernest Hemingway Home in Key West. They recapture their passion for life and their love for each other on a road trip that provides revelation and surprise right up to the very end.",
+    description: "A runaway couple go on an unforgettable journey in the faithful old RV they call The Leisure Seeker, traveling from Boston to The Ernest Hemingway Home in Key West. They recapture their passion for life and their love for each other on a road trip that provides revelation and surprise right up to the very end.",
     showtimes: ["13:40", "15:50", "19:00", "21:20", "23:50"]
   },
   {
@@ -61,6 +68,18 @@ const movies = [
     stars: ["Jennifer Lawrence", "Joel Edgerton", "Matthias Schoenaerts"],
     image: "https://images-na.ssl-images-amazon.com/images/M/MV5BMTA3MDkxOTc4NDdeQTJeQWpwZ15BbWU4MDAxNzgyNTQz._V1_UX182_CR0,0,182,268_AL_.jpg",
     description: "Ballerina Dominika Egorova is recruited to 'Sparrow School,' a Russian intelligence service where she is forced to use her body as a weapon. Her first mission, targeting a C.I.A. agent, threatens to unravel the security of both nations.",
-    showtimes: ["13:00", "15:30", "18:00", "20:10", "22:40"]
-  }
+    howtimes: ["13:00", "15:30", "18:00", "20:10", "22:40"]
+  },
 ];
+
+
+Movie.insertMany(movies)
+.then( movies => {
+  movies.forEach( movie => {
+    console.log(`${movie.title} added!`)
+  })
+  mongoose.connection.close();
+})
+.catch( error => {
+  console.log(error)
+})
